@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Optimized A-Frame Rain with Grayish Fog</title>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene fog="type: linear; color: #888888; near: 5; far: 80">
+q
+           <a-sky color="#444466"></a-sky>
+      
+      <a-text color="white" position="-1 1 -3" value="It's Raining!"></a-text>
+      
+      <a-light light="type: directional; color: #FFF; intensity: 1.5; position: -1 1 2"></a-light>
+      
+      <a-light light="type: ambient; color: #F6F456"></a-light>
+
+      <a-entity id="rain-container"></a-entity>
+    </a-scene>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const rainContainer = document.querySelector('#rain-container');
+        const totalRaindrops = 500;  
+        const maxRange = 200;        
+
+        const createRaindrop = () => {
+          const raindrop = document.createElement('a-sphere');
+          const startX = (Math.random() * maxRange) - (maxRange / 2);  
+          const startZ = (Math.random() * maxRange) - (maxRange / 2);  
+          const fallSpeed = Math.random() * 1500 + 1000;  
+
+          raindrop.setAttribute('radius', '0.95');  
+          raindrop.setAttribute('color', '#000099');  
+          raindrop.setAttribute('opacity', '0.3');  
+
+          raindrop.setAttribute('position', `${startX} 50 ${startZ}`);
+          
+          raindrop.setAttribute('animation', {
+            property: 'position',
+            to: `${startX} -25 ${startZ}`,  
+            dur: fallSpeed,  
+            loop: true,  
+            easing: 'linear',
+            delay: Math.random() * 2,  
+          });
+
+          rainContainer.appendChild(raindrop);
+        };
+
+        for (let i = 0; i < totalRaindrops; i++) {
+          createRaindrop();  
+        }
+      });
+    </script>
+  </body>
+</html>
